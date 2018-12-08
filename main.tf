@@ -27,6 +27,17 @@ resource "azurerm_kubernetes_cluster" "k8s" {
         client_secret = "${var.service_principal_client_secret}"
     }
 
+    network_profile {
+        network_plugin = "azure"
+    }
+
+    addon_profile {
+        oms_agent {
+            enabled                    = true
+            log_analytics_workspace_id = "${var.log_analytics_workspace_id}"
+        }
+    }
+
     tags {
         Team = "${var.tag_team}"
     }
